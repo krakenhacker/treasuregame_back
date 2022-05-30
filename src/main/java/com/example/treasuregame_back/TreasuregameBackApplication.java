@@ -6,14 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
-@RestController
 public class TreasuregameBackApplication {
-
-    @GetMapping("/test")
-    public String HelloDocker() {
-        return "Hello Docker";
-    }
-
     public static void main(String[] args) {
         SpringApplication.run(TreasuregameBackApplication.class, args);
     }

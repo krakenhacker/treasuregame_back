@@ -12,6 +12,8 @@ services:
       MYSQL_DATABASE: treasuredb
       MYSQL_USER: treasureuser
       MYSQL_PASSWORD: treasurepassword
+    ports:
+      - '3306:3306'
     networks:
       - backend
   # phpmyadmin
