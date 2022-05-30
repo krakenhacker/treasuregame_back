@@ -56,6 +56,11 @@ Then, you can run the app like any other container:
 $ docker run --rm -p 8080:8080 treasuregame_back:0.0.1-SNAPSHOT
 ```
 
+In order to run the database container just type this command:
+```
+$ docker-compose up
+```
+
 ### Executable with Native Build Tools
 
 Use this option if you want to explore more options such as running your tests in a native image.
