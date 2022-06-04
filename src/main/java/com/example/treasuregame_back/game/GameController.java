@@ -21,7 +21,7 @@ public class GameController {
         return gameService.getGames();
     }
 
-    @PostMapping
+    @PostMapping(path = "/create")
     public void createNewGame(@RequestBody Game game){
         gameService.addNewGame(game);
     }
