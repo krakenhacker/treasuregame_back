@@ -34,14 +34,14 @@ class GameServiceTest {
                 List<Game> games = new ArrayList<>();
                 Game game = new Game("test", LocalDateTime.now(),LocalDateTime.now(),10.5,11.5,12.5,13.5);
                 games.add(game);
-                when(service.getGames()).thenReturn(games);
+                when(service.findAll()).thenReturn(games);
                 assertNotEquals(0, games.size());
         }
         @Test
         void AddNewGameMethodSuccesfullyAddANewGameIntoRepository() {
                 List<Game> games = new ArrayList<>();
                 Game game = new Game("test", DateStartTest,DateEndTest,10.5,11.5,12.5,13.5);
-                service.addNewGame(game);
+                service.add(game);
                 when(mock.findGameByName("test")).thenReturn(Optional.of(game));
                 assertEquals("test", game.getName());
                 assertEquals(DateStartTest,game.getTimestart());
