@@ -1,14 +1,38 @@
 package com.example.treasuregame_back;
 
+import com.example.treasuregame_back.View.LoginView;
+import com.vaadin.flow.spring.VaadinApplicationConfiguration;
+import com.vaadin.flow.spring.security.VaadinWebSecurityConfigurerAdapter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
-public class TreasuregameBackApplication {
+public class TreasuregameBackApplication extends VaadinWebSecurityConfigurerAdapter {
     public static void main(String[] args) {
         SpringApplication.run(TreasuregameBackApplication.class, args);
     }
 
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        super.configure(http);
+        setLoginView(http, LoginView.class);
+    }
+
+    @Override
+    @Bean
+    public UserDetailsService userDetailsServiceBean() throws Exception {
+        return new InMemoryUserDetailsManager(
+                User.withUsername("admin")
+                        .password("{noop}admin")
+                        .roles("ADMIN")
+                        .build()
+        );
+    }
 }

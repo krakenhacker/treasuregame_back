@@ -1,11 +1,18 @@
 package com.example.treasuregame_back.game;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
-
+@Data
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table
 public class Game {
+
     @Id
     @SequenceGenerator(
             name = "game_sequence",
@@ -20,7 +27,7 @@ public class Game {
     private String name;
     private LocalDateTime timestart;
     private LocalDateTime timeend;
-    private double x,y,z,w;
+    private double x,y,w,z;
 
     public Game() {
     }
