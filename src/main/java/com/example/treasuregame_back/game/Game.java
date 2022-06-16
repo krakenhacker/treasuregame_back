@@ -1,11 +1,18 @@
 package com.example.treasuregame_back.game;
 
-import javax.persistence.*;
-import java.time.LocalDateTime;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
+@Data
 @Entity
 @Table
-public class Game {
+public final class Game {
+
     @Id
     @SequenceGenerator(
             name = "game_sequence",
@@ -16,30 +23,45 @@ public class Game {
             strategy = GenerationType.SEQUENCE,
             generator = "game_sequence"
     )
+    @Column(name = "id")
     private Long id;
+    @Column(name = "name")
     private String name;
-    private LocalDateTime timestart;
-    private LocalDateTime timeend;
-    private double x,y,z,w;
+    @Column(name = "startdate")
+    private LocalDate startdate;
+    @Column(name = "starttime")
+    private LocalTime starttime;
+    @Column(name = "duration")
+    private Double duration;
+    @Column(name = "x")
+    private double x;
+    @Column(name = "y")
+    private double y;
+    @Column(name = "w")
+    private double w;
+    @Column(name = "z")
+    private double z;
 
     public Game() {
     }
 
-    public Game(Long id, String name, LocalDateTime timestart, LocalDateTime timeend, double x, double y, double z, double w) {
+    public Game(Long id, String name, LocalDate startdate, LocalTime starttime,Double duration, double x, double y, double z, double w) {
         this.id = id;
         this.name = name;
-        this.timestart = timestart;
-        this.timeend = timeend;
+        this.startdate = startdate;
+        this.starttime = starttime;
+        this.duration = duration;
         this.x = x;
         this.y = y;
         this.z = z;
         this.w = w;
     }
 
-    public Game(String name, LocalDateTime timestart, LocalDateTime timeend, double x, double y, double z, double w) {
+    public Game(String name, LocalDate startdate, LocalTime starttime,Double duration, double x, double y, double z, double w) {
         this.name = name;
-        this.timestart = timestart;
-        this.timeend = timeend;
+        this.startdate = startdate;
+        this.starttime = starttime;
+        this.duration = duration;
         this.x = x;
         this.y = y;
         this.z = z;
@@ -63,20 +85,20 @@ public class Game {
         this.name = name;
     }
 
-    public LocalDateTime getTimestart() {
-        return timestart;
+    public LocalDate getStartdate() {
+        return startdate;
     }
 
-    public void setTimestart(LocalDateTime timestart) {
-        this.timestart = timestart;
+    public void setStartdate(LocalDate startdate) {
+        this.startdate = startdate;
     }
 
-    public LocalDateTime getTimeend() {
-        return timeend;
+    public LocalTime getstarttime() {
+        return starttime;
     }
 
-    public void setTimeend(LocalDateTime timeend) {
-        this.timeend = timeend;
+    public void setstarttime(LocalTime starttime) {
+        this.starttime = starttime;
     }
 
     public double getX() {
@@ -111,13 +133,21 @@ public class Game {
         this.w = w;
     }
 
+    public Double getDuration() {
+        return duration;
+    }
+
+    public void setDouble(Double Double) {
+        this.duration = duration;
+    }
+
     @Override
     public String toString() {
         return "Game{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", timestart=" + timestart +
-                ", timeend=" + timeend +
+                ", startdate=" + startdate +
+                ", starttime=" + starttime +
                 ", x=" + x +
                 ", y=" + y +
                 ", z=" + z +
