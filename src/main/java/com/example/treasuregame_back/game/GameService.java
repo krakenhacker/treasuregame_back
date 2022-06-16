@@ -1,12 +1,10 @@
 package com.example.treasuregame_back.game;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.vaadin.crudui.crud.CrudListener;
 
 import java.util.Collection;
-import java.util.List;
 
 @Service
 public class GameService implements CrudListener<Game> {
