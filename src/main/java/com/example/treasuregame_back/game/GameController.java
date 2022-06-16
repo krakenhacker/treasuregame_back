@@ -1,9 +1,11 @@
 package com.example.treasuregame_back.game;
 
 
+import com.vaadin.flow.server.auth.AnonymousAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -17,13 +19,13 @@ public class GameController {
     }
 
     @GetMapping
-    public List<Game> getGames(){
-        return gameService.getGames();
+    public Collection<Game> getGames(){
+        return gameService.findAll();
     }
 
     @PostMapping(path = "/create")
     public void createNewGame(@RequestBody Game game){
-        gameService.addNewGame(game);
+        gameService.add(game);
     }
 
 
