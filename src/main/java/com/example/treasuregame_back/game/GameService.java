@@ -5,9 +5,10 @@ import org.springframework.stereotype.Service;
 import org.vaadin.crudui.crud.CrudListener;
 
 import java.util.Collection;
+import java.util.List;
 
 @Service
-public class GameService implements CrudListener<Game> {
+public class GameService  implements CrudListener<Game> {
     private final GameRepository gameRepository;
 
     @Autowired
@@ -23,7 +24,7 @@ public class GameService implements CrudListener<Game> {
 //    public void addNewGame(Game game) {
 //        gameRepository.save(game);
 //    }
-
+//
     @Override
     public Collection<Game> findAll() {
         return gameRepository.findAll();

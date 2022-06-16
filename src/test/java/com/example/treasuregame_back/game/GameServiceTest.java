@@ -5,11 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 
-import java.time.LocalDateTime;
-import java.time.Month;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.time.*;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -26,26 +23,28 @@ class GameServiceTest {
 
         }
 
-        LocalDateTime DateStartTest = LocalDateTime.of(2000, Month.JANUARY,1,12,00);
-        LocalDateTime DateEndTest = LocalDateTime.of(2000, Month.JANUARY,1,14,00);
+        LocalDate DateStartTest = LocalDate.of(2000, Month.JANUARY,1);
+        LocalTime TimeStartTest = LocalTime.of(12, 15);
 
         @Test
         void getGamesMustReturnsAtLeasteOneGame() {
-                List<Game> games = new ArrayList<>();
-                Game game = new Game("test", LocalDateTime.now(),LocalDateTime.now(),10.5,11.5,12.5,13.5);
+                Collection<Game> games = new ArrayList<>();
+                Game game = new Game("test", LocalDate.now(), LocalTime.now(), 0.5,10.5,11.5,12.5,13.5);
                 games.add(game);
                 when(service.findAll()).thenReturn(games);
+                games = service.findAll();
                 assertNotEquals(0, games.size());
         }
         @Test
         void AddNewGameMethodSuccesfullyAddANewGameIntoRepository() {
-                List<Game> games = new ArrayList<>();
-                Game game = new Game("test", DateStartTest,DateEndTest,10.5,11.5,12.5,13.5);
+                Game game = new Game("test", DateStartTest,TimeStartTest,0.5,10.5,11.5,12.5,13.5);
                 service.add(game);
-                when(mock.findGameByName("test")).thenReturn(Optional.of(game));
+                when(mock.findGameByName("test")).thenReturn(game);
+                game = mock.findGameByName("test");
                 assertEquals("test", game.getName());
-                assertEquals(DateStartTest,game.getTimestart());
-                assertEquals(DateEndTest,game.getTimeend());
+                assertEquals(DateStartTest,game.getStartdate());
+                assertEquals(TimeStartTest,game.getstarttime());
+                assertEquals(Duration.ofMinutes(30),game.getDuration());
                 assertEquals(10.5,game.getX());
                 assertEquals(11.5,game.getY());
                 assertEquals(12.5,game.getZ());
