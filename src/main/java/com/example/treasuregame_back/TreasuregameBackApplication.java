@@ -1,12 +1,15 @@
 package com.example.treasuregame_back;
 
 import com.example.treasuregame_back.View.LoginView;
+import com.example.treasuregame_back.game.GameController;
+import com.example.treasuregame_back.game.GameRepository;
 import com.vaadin.flow.spring.VaadinApplicationConfiguration;
 import com.vaadin.flow.spring.security.VaadinWebSecurityConfigurerAdapter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
@@ -23,6 +26,11 @@ public class TreasuregameBackApplication extends VaadinWebSecurityConfigurerAdap
     protected void configure(HttpSecurity http) throws Exception {
         super.configure(http);
         setLoginView(http, LoginView.class);
+        getDefaultWebSecurityIgnoreMatcher("http://localhost:8080/api/v1/game");
+    }
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/api/**");
     }
 
     @Override
