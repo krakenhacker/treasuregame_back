@@ -44,7 +44,7 @@ class GameServiceTest {
                 assertEquals("test", game.getName());
                 assertEquals(DateStartTest,game.getStartdate());
                 assertEquals(TimeStartTest,game.getstarttime());
-                assertEquals(Duration.ofMinutes(30),game.getDuration());
+                assertEquals(0.5,game.getDuration());
                 assertEquals(10.5,game.getX());
                 assertEquals(11.5,game.getY());
                 assertEquals(12.5,game.getZ());
