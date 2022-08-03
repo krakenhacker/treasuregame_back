@@ -5,6 +5,7 @@ import com.example.treasuregame_back.game.GameService;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.datepicker.DatePicker;
+import com.vaadin.flow.component.datetimepicker.DateTimePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.notification.Notification;
@@ -23,10 +24,9 @@ import java.awt.*;
 
 @Route("new")
 @RolesAllowed("ADMIN")
-public class NewGameView extends VerticalLayout {
+public class NewGameView extends VerticalLayout  {
     private TextField name = new TextField("Name");
-    private DatePicker date = new DatePicker("Starting Date");
-    private TimePicker time = new TimePicker("Starting Time");
+    private DateTimePicker start = new DateTimePicker("Starts");
     private NumberField duration = new NumberField("Duration (hours)");
 
     private NumberField x = new NumberField("X");
@@ -41,7 +41,7 @@ public class NewGameView extends VerticalLayout {
 
         add(
                 new H1("New Game"),
-                new FormLayout(name,date,time,NumberFieldStep(duration),x,y,w,z),
+                new FormLayout(name,start,NumberFieldStep(duration),x,y,w,z),
                 new Button("Save", event ->{
                     var game = new Game();
                     binder.writeBeanIfValid(game);

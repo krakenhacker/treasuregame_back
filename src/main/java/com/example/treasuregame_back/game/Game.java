@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 @Data
 @Entity
@@ -27,12 +28,11 @@ public final class Game {
     private Long id;
     @Column(name = "name")
     private String name;
-    @Column(name = "startdate")
-    private LocalDate startdate;
-    @Column(name = "starttime")
-    private LocalTime starttime;
+    @Column(name = "start")
+    private LocalDateTime start;
     @Column(name = "duration")
-    private Double duration;
+    private double duration;
+
     @Column(name = "x")
     private double x;
     @Column(name = "y")
@@ -45,11 +45,10 @@ public final class Game {
     public Game() {
     }
 
-    public Game(Long id, String name, LocalDate startdate, LocalTime starttime,Double duration, double x, double y, double z, double w) {
+    public Game(Long id, String name, LocalDateTime start,double duration, double x, double y, double z, double w) {
         this.id = id;
         this.name = name;
-        this.startdate = startdate;
-        this.starttime = starttime;
+        this.start = start;
         this.duration = duration;
         this.x = x;
         this.y = y;
@@ -57,10 +56,9 @@ public final class Game {
         this.w = w;
     }
 
-    public Game(String name, LocalDate startdate, LocalTime starttime,Double duration, double x, double y, double z, double w) {
+    public Game(String name, LocalDateTime start,double duration, double x, double y, double z, double w) {
         this.name = name;
-        this.startdate = startdate;
-        this.starttime = starttime;
+        this.start = start;
         this.duration = duration;
         this.x = x;
         this.y = y;
@@ -85,21 +83,21 @@ public final class Game {
         this.name = name;
     }
 
-    public LocalDate getStartdate() {
-        return startdate;
-    }
-
-    public void setStartdate(LocalDate startdate) {
-        this.startdate = startdate;
-    }
-
-    public LocalTime getstarttime() {
-        return starttime;
-    }
-
-    public void setstarttime(LocalTime starttime) {
-        this.starttime = starttime;
-    }
+//    public LocalDate getStartdate() {
+//        return startdate;
+//    }
+//
+//    public void setStartdate(LocalDate startdate) {
+//        this.startdate = startdate;
+//    }
+//
+//    public LocalTime getstarttime() {
+//        return starttime;
+//    }
+//
+//    public void setstarttime(LocalTime starttime) {
+//        this.starttime = starttime;
+//    }
 
     public double getX() {
         return x;
@@ -133,12 +131,20 @@ public final class Game {
         this.w = w;
     }
 
-    public Double getDuration() {
+    public double getDuration() {
         return duration;
     }
 
-    public void setDouble(Double Double) {
+    public void setDuration(double duration) {
         this.duration = duration;
+    }
+
+    public LocalDateTime getStart() {
+        return start;
+    }
+
+    public void setStart(LocalDateTime start) {
+        this.start = start;
     }
 
     @Override
@@ -146,8 +152,7 @@ public final class Game {
         return "Game{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", startdate=" + startdate +
-                ", starttime=" + starttime +
+                ", start=" + start +
                 ", x=" + x +
                 ", y=" + y +
                 ", z=" + z +
