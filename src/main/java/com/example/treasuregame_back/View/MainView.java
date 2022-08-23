@@ -15,18 +15,20 @@ import com.vaadin.flow.router.RouterLink;
 import org.vaadin.crudui.crud.CrudOperation;
 import org.vaadin.crudui.crud.impl.GridCrud;
 import javax.annotation.security.RolesAllowed;
+import java.time.LocalDateTime;
 
 @Route("")
 @RolesAllowed("ADMIN")
 public class MainView extends VerticalLayout {
 
     public MainView(GameService service){
+        Button NewGameButton = new Button("New Game");
+        NewGameButton.addClickListener( e -> UI.getCurrent().navigate(NewGameView.class));
+
         var crud = new GridCrud<>(Game.class, service);
         crud.getGrid().setColumns("name","start","duration","x","y","w","z");
         crud.getCrudFormFactory().setVisibleProperties("name","start","duration","x","y","w","z");
         crud.setAddOperationVisible(false);
-        Button NewGameButton = new Button("New Game");
-        NewGameButton.addClickListener( e -> UI.getCurrent().navigate(NewGameView.class));
         crud.getCrudLayout().addToolbarComponent(NewGameButton);
         crud.setFindAllOperation(() -> service.findAll());
         add(

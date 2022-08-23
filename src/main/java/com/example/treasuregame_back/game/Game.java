@@ -153,6 +153,7 @@ public final class Game {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", start=" + start +
+                ", duration=" + duration +
                 ", x=" + x +
                 ", y=" + y +
                 ", z=" + z +
