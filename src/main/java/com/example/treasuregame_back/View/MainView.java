@@ -3,6 +3,7 @@ package com.example.treasuregame_back.View;
 
 import com.example.treasuregame_back.game.Game;
 import com.example.treasuregame_back.game.GameService;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.H1;
@@ -24,7 +25,9 @@ public class MainView extends VerticalLayout {
         crud.getGrid().setColumns("name","start","duration","x","y","w","z");
         crud.getCrudFormFactory().setVisibleProperties("name","start","duration","x","y","w","z");
         crud.setAddOperationVisible(false);
-        crud.getCrudLayout().addToolbarComponent(new Button(new RouterLink("New Game", NewGameView.class)));
+        Button NewGameButton = new Button("New Game");
+        NewGameButton.addClickListener( e -> UI.getCurrent().navigate(NewGameView.class));
+        crud.getCrudLayout().addToolbarComponent(NewGameButton);
         crud.setFindAllOperation(() -> service.findAll());
         add(
                  new H1("Admin Dashboard"),
