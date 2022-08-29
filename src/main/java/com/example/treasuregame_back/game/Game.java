@@ -1,5 +1,6 @@
 package com.example.treasuregame_back.game;
 
+import com.example.treasuregame_back.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -9,10 +10,15 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-@Data
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
-@Table
+@Table(name = "games")
 public final class Game {
+
+    @ManyToMany(mappedBy = "games")
+    private Set<User> users = new HashSet<>();
 
     @Id
     @SequenceGenerator(
@@ -24,7 +30,7 @@ public final class Game {
             strategy = GenerationType.SEQUENCE,
             generator = "game_sequence"
     )
-    @Column(name = "id")
+    @Column(name = "game_id")
     private Long id;
     @Column(name = "name")
     private String name;
