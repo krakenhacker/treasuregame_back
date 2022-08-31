@@ -1,5 +1,6 @@
 package com.example.treasuregame_back.game;
 
+import com.example.treasuregame_back.GameUsers.GameUsers;
 import com.example.treasuregame_back.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,8 +18,8 @@ import java.util.Set;
 @Table(name = "games")
 public final class Game {
 
-    @ManyToMany(mappedBy = "games")
-    private Set<User> users = new HashSet<>();
+    @OneToMany(mappedBy = "game", cascade = CascadeType.ALL)
+    private Set<GameUsers> gameUsers = new HashSet<>();
 
     @Id
     @SequenceGenerator(

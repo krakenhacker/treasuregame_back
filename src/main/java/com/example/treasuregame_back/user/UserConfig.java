@@ -10,8 +10,8 @@ public class UserConfig {
     @Bean
     CommandLineRunner UserCommandLine(UserRepository repository){
         return args -> {
-            User user1 = new User("krakenhacker","george.sot@windowslive.com","12345");
-            User user2 = new User("garoufalis","george.sot19@gmail.com","56789");
+            User user1 = new User("krakenhacker","george.sot@windowslive.com");
+            User user2 = new User("garoufalis","george.sot19@gmail.com");
             List<User> users = new ArrayList<>();
             users.add(user1);
             users.add(user2);

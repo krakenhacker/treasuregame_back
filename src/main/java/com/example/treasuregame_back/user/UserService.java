@@ -16,14 +16,6 @@ public class UserService  implements CrudListener<User> {
     }
 
 
-    //    public List<Game> getGames(){
-//        return gameRepository.findAll();
-//    }
-//
-//    public void addNewGame(Game game) {
-//        gameRepository.save(game);
-//    }
-//
     @Override
     public Collection<User> findAll() {
         return userRepository.findAll();

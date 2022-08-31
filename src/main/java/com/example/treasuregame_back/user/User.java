@@ -1,5 +1,6 @@
 package com.example.treasuregame_back.user;
 
+import com.example.treasuregame_back.GameUsers.GameUsers;
 import com.example.treasuregame_back.game.Game;
 
 import javax.persistence.*;
@@ -10,13 +11,8 @@ import java.util.Set;
 @Table(name = "users")
 public class User {
 
-    @ManyToMany(cascade = { CascadeType.ALL })
-    @JoinTable(
-            name = "User_Game",
-            joinColumns = { @JoinColumn(name = "user_id") },
-            inverseJoinColumns = { @JoinColumn(name = "game_id") }
-    )
-    Set<Game> games = new HashSet<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    Set<GameUsers> gameUsers = new HashSet<>();
 
     @Id
     @SequenceGenerator(
@@ -34,32 +30,20 @@ public class User {
     private String nickname;
     @Column(name = "email")
     private String email;
-    @Column(name = "code")
-    private String code;
+
 
     public User() {
     }
 
-    public User(String nickname, String email, String code) {
-        this.nickname = nickname;
-        this.email = email;
-        this.code = code;
-    }
-
-    public User(Set<Game> games, Long id, String nickname, String email, String code) {
-        this.games = games;
+    public User(Long id, String nickname, String email) {
         this.id = id;
         this.nickname = nickname;
         this.email = email;
-        this.code = code;
     }
 
-    public Set<Game> getGames() {
-        return games;
-    }
-
-    public void setGames(Set<Game> games) {
-        this.games = games;
+    public User(String nickname, String email) {
+        this.nickname = nickname;
+        this.email = email;
     }
 
     public Long getId() {
@@ -84,13 +68,5 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
     }
 }
