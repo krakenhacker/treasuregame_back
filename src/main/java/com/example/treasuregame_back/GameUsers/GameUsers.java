@@ -2,11 +2,8 @@ package com.example.treasuregame_back.GameUsers;
 
 import com.example.treasuregame_back.game.Game;
 import com.example.treasuregame_back.user.User;
-import lombok.*;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 
 @Entity
@@ -30,8 +27,7 @@ public class GameUsers {
     public GameUsers() {
     }
 
-    public GameUsers(Game game, User user, String code) {
-        this.game = game;
+    public GameUsers(User user, String code) {
         this.user = user;
         this.code = code;
     }
