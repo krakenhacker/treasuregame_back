@@ -1,5 +1,9 @@
 package com.example.treasuregame_back.game;
 
+import com.example.treasuregame_back.GameUsers.GameUsers;
+import com.example.treasuregame_back.user.User;
+import com.example.treasuregame_back.user.UserRepository;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.vaadin.crudui.crud.CrudListener;
@@ -10,7 +14,6 @@ import java.util.List;
 @Service
 public class GameService  implements CrudListener<Game> {
     private final GameRepository gameRepository;
-
     @Autowired
     public GameService(GameRepository gameRepository) {
         this.gameRepository = gameRepository;
@@ -33,6 +36,10 @@ public class GameService  implements CrudListener<Game> {
     @Override
     public Game add(Game game) {
         return gameRepository.save(game);
+    }
+
+    public Game addGameWithUser(Game game, User user){
+        return gameRepository.save(new Game(game.getName(),game.getStart(),game.getDuration(), game.getX(), game.getY(), game.getZ(), game.getW(),new GameUsers(user,"test")));
     }
 
     @Override
