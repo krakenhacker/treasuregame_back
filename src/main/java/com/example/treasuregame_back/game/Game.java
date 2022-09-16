@@ -1,5 +1,7 @@
 package com.example.treasuregame_back.game;
 
+import com.example.treasuregame_back.GameUsers.GameUsers;
+import com.example.treasuregame_back.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -9,10 +11,17 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-@Data
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 @Entity
-@Table
+@Table(name = "games")
 public final class Game {
+
+    @OneToMany(mappedBy = "game", cascade = CascadeType.ALL)
+    private Set<GameUsers> gameUsers = new HashSet<>();
 
     @Id
     @SequenceGenerator(
@@ -24,7 +33,7 @@ public final class Game {
             strategy = GenerationType.SEQUENCE,
             generator = "game_sequence"
     )
-    @Column(name = "id")
+    @Column(name = "game_id")
     private Long id;
     @Column(name = "name")
     private String name;
@@ -66,6 +75,17 @@ public final class Game {
         this.w = w;
     }
 
+    public Game(String name, LocalDateTime start, double duration, double x, double y, double w, double z, GameUsers... gameUsers) {
+        this.name = name;
+        this.start = start;
+        this.duration = duration;
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.z = z;
+        for(GameUsers gameUser : gameUsers) gameUser.setGame(this);
+        this.gameUsers = Stream.of(gameUsers).collect(Collectors.toSet());
+    }
 
     public Long getId() {
         return id;
