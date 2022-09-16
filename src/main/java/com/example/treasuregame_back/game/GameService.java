@@ -1,16 +1,21 @@
 package com.example.treasuregame_back.game;
 
+import com.example.treasuregame_back.GameUsers.GameUsers;
+import com.example.treasuregame_back.user.User;
+import com.example.treasuregame_back.user.UserRepository;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.vaadin.crudui.crud.CrudListener;
 
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class GameService  implements CrudListener<Game> {
     private final GameRepository gameRepository;
-
     @Autowired
     public GameService(GameRepository gameRepository) {
         this.gameRepository = gameRepository;
@@ -35,6 +40,10 @@ public class GameService  implements CrudListener<Game> {
         return gameRepository.save(game);
     }
 
+    public Game addGameWithUser(Game game, User user){
+        return gameRepository.save(new Game(game.getName(),game.getStart(),game.getDuration(), game.getX(), game.getY(), game.getZ(), game.getW(),new GameUsers(user,getRandomNumber())));
+    }
+
     @Override
     public Game update(Game game) {
         return gameRepository.save(game);
@@ -43,5 +52,18 @@ public class GameService  implements CrudListener<Game> {
     @Override
     public void delete(Game game) {
         gameRepository.delete(game);
+    }
+
+    public Game findGameById(Long id){
+        return gameRepository.findGameById(id);
+    }
+
+    public Long getNextVal(){
+        return gameRepository.getNextValMySequence();
+    }
+    public int getRandomNumber() {
+        Random rnd = new Random();
+        int n = 100000 + rnd.nextInt(899999);
+        return n;
     }
 }
