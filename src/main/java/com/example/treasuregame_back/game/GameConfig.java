@@ -21,6 +21,8 @@ public class GameConfig {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private GameService gameService;
 
     @Bean
     CommandLineRunner GameCommandLine(GameRepository repository){
@@ -28,7 +30,7 @@ public class GameConfig {
             User user1 = new User("krakenhacker","george.sot@windowslive.com");
             User user2 = new User("garoufalis","george.sot19@gmail.com");
             userRepository.saveAll(Arrays.asList(user1,user2));
-            Game game1 = new Game("Test", LocalDateTime.now(), 0.5,10.5,11.5,12.5,13.5, new GameUsers(user1,"test"), new GameUsers(user2,"test"));
+            Game game1 = new Game("Test", LocalDateTime.now(), 0.5,10.5,11.5,12.5,13.5, new GameUsers(user1, gameService.getRandomNumber()), new GameUsers(user2,gameService.getRandomNumber()));
             repository.save(game1);
         };
     }

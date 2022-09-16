@@ -22,12 +22,12 @@ public class GameUsers {
     private User user;
 
     @Column(name = "code")
-    private String code;
+    private int code;
 
     public GameUsers() {
     }
 
-    public GameUsers(User user, String code) {
+    public GameUsers(User user, int code) {
         this.user = user;
         this.code = code;
     }
@@ -48,11 +48,11 @@ public class GameUsers {
         this.user = user;
     }
 
-    public String getCode() {
+    public int getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(int code) {
         this.code = code;
     }
 }
