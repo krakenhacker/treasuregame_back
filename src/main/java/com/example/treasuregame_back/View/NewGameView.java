@@ -23,6 +23,7 @@ import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.converter.StringToDoubleConverter;
 import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 
 import javax.annotation.security.RolesAllowed;
 import java.awt.*;
@@ -60,18 +61,21 @@ public class NewGameView extends VerticalLayout  {
                     var game = new Game();
                     User user = new User();
                     user = saveUserIfnotExist(user);
-                    service.add(game);
+                    Long savedgameid = service.getNextVal();
                     binder.writeBeanIfValid(game);
                     service.addGameWithUser(game,user);
                     Notification.show("Game Saved.");
                     binder.readBean(new Game());
-                    String msgtext;
-                    GameUsers gameUsers = gameUsersService.searchCode(game, user);
-                    msgtext = String.format("You have been invited to game: "+game.getName()+"  starting at  "+game.getStart()+"  use invitation code:  " +gameUsers.getCode());
-                    emailService.sendSimpleMessage(user.getEmail(),"Treasure Game Invitation",msgtext);
+                    game.setId(savedgameid);
+                    sendmail(game,user);
                 })
 
         );
+    }
+    public void sendmail(Game game,User user){
+        GameUsers gameUsers = gameUsersService.searchCode(game, user);
+        String msgtext =String.format("You have been invited to game: "+game.getName()+"  starting at  "+game.getStart()+"  use invitation code:  " +gameUsers.getCode());
+        emailService.sendSimpleMessage(user.getEmail(),"Treasure Game Invitation",msgtext);
     }
 
 

@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.vaadin.crudui.crud.CrudListener;
 
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class GameService  implements CrudListener<Game> {
@@ -39,7 +41,7 @@ public class GameService  implements CrudListener<Game> {
     }
 
     public Game addGameWithUser(Game game, User user){
-        return gameRepository.save(new Game(game.getName(),game.getStart(),game.getDuration(), game.getX(), game.getY(), game.getZ(), game.getW(),new GameUsers(user,"test")));
+        return gameRepository.save(new Game(game.getName(),game.getStart(),game.getDuration(), game.getX(), game.getY(), game.getZ(), game.getW(),new GameUsers(user,getRandomNumber())));
     }
 
     @Override
@@ -54,5 +56,14 @@ public class GameService  implements CrudListener<Game> {
 
     public Game findGameById(Long id){
         return gameRepository.findGameById(id);
+    }
+
+    public Long getNextVal(){
+        return gameRepository.getNextValMySequence();
+    }
+    public int getRandomNumber() {
+        Random rnd = new Random();
+        int n = 100000 + rnd.nextInt(899999);
+        return n;
     }
 }
