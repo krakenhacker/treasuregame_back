@@ -35,4 +35,16 @@ public class UserService  implements CrudListener<User> {
     public void delete(User user) {
         userRepository.delete(user);
     }
+
+    public User findUserByEmail(String email){
+        return userRepository.findUserByEmail(email);
+    }
+    public boolean IfUserExist(User user){
+        if(userRepository.findUserByEmail(user.getEmail())!=null) {
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 }

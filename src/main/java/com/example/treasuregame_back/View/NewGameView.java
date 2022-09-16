@@ -4,6 +4,7 @@ import com.example.treasuregame_back.game.Game;
 import com.example.treasuregame_back.game.GameService;
 import com.example.treasuregame_back.user.User;
 import com.example.treasuregame_back.user.UserRepository;
+import com.example.treasuregame_back.user.UserService;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.datepicker.DatePicker;
@@ -27,7 +28,7 @@ import java.awt.*;
 @RolesAllowed("ADMIN")
 public class NewGameView extends VerticalLayout  {
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
     private TextField name = new TextField("Name");
     private DateTimePicker start = new DateTimePicker("Starts");
     private NumberField duration = new NumberField("Duration (hours)");
@@ -51,8 +52,7 @@ public class NewGameView extends VerticalLayout  {
                 new Button("Save", event ->{
                     var game = new Game();
                     User user = new User();
-                    user.setEmail(validEmailField.getValue());
-                    userRepository.save(user);
+                    user = saveUserIfnotExist(user);
                     binder.writeBeanIfValid(game);
                     service.addGameWithUser(game,user);
                     Notification.show("Game Saved.");
@@ -70,5 +70,16 @@ public class NewGameView extends VerticalLayout  {
         numberField.setValue(0.5);
         numberField.setHasControls(true);
         return numberField;
+    }
+    public User saveUserIfnotExist(User user){
+        user.setEmail(validEmailField.getValue());
+        if(userService.IfUserExist(user)) {
+            user = userService.findUserByEmail(user.getEmail());
+            return user;
+        }
+        else{
+            userService.add(user);
+            return user;
+        }
     }
 }
