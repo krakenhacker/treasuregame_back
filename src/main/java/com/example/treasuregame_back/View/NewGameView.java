@@ -1,5 +1,8 @@
 package com.example.treasuregame_back.View;
 
+import com.example.treasuregame_back.Email.EmailServiceImpl;
+import com.example.treasuregame_back.GameUsers.GameUsers;
+import com.example.treasuregame_back.GameUsers.GameUsersService;
 import com.example.treasuregame_back.game.Game;
 import com.example.treasuregame_back.game.GameService;
 import com.example.treasuregame_back.user.User;
@@ -29,6 +32,10 @@ import java.awt.*;
 public class NewGameView extends VerticalLayout  {
     @Autowired
     private UserService userService;
+    @Autowired
+    private EmailServiceImpl emailService;
+    @Autowired
+    private GameUsersService gameUsersService;
     private TextField name = new TextField("Name");
     private DateTimePicker start = new DateTimePicker("Starts");
     private NumberField duration = new NumberField("Duration (hours)");
@@ -53,10 +60,15 @@ public class NewGameView extends VerticalLayout  {
                     var game = new Game();
                     User user = new User();
                     user = saveUserIfnotExist(user);
+                    service.add(game);
                     binder.writeBeanIfValid(game);
                     service.addGameWithUser(game,user);
                     Notification.show("Game Saved.");
                     binder.readBean(new Game());
+                    String msgtext;
+                    GameUsers gameUsers = gameUsersService.searchCode(game, user);
+                    msgtext = String.format("You have been invited to game: "+game.getName()+"  starting at  "+game.getStart()+"  use invitation code:  " +gameUsers.getCode());
+                    emailService.sendSimpleMessage(user.getEmail(),"Treasure Game Invitation",msgtext);
                 })
 
         );
