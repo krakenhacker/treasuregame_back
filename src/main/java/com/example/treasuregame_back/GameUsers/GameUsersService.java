@@ -1,4 +1,6 @@
 package com.example.treasuregame_back.GameUsers;
+import com.example.treasuregame_back.game.Game;
+import com.example.treasuregame_back.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.vaadin.crudui.crud.CrudListener;
@@ -31,5 +33,9 @@ public class GameUsersService implements CrudListener<GameUsers> {
     @Override
     public void delete(GameUsers gameUsers) {
         gameUsersRepository.delete(gameUsers);
+    }
+
+    public GameUsers searchCode(Game game, User user){
+        return gameUsersRepository.findGameUsersCodeByGameIdAndUserId(game.getId(), user.getId());
     }
 }

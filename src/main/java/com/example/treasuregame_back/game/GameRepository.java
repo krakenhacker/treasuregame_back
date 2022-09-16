@@ -9,4 +9,7 @@ public interface GameRepository extends JpaRepository<Game, Long> {
 
     @Query("select g from Game g where g.name = ?1")
     Game findGameByName(String name);
+
+    @Query("select g from Game g where g.id = ?1")
+    Game findGameById(Long id);
 }

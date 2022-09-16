@@ -51,4 +51,8 @@ public class GameService  implements CrudListener<Game> {
     public void delete(Game game) {
         gameRepository.delete(game);
     }
+
+    public Game findGameById(Long id){
+        return gameRepository.findGameById(id);
+    }
 }
