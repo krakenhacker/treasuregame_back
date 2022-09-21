@@ -36,6 +36,6 @@ public class GameUsersService implements CrudListener<GameUsers> {
     }
 
     public GameUsers searchCode(Game game, User user){
-        return gameUsersRepository.findGameUsersCodeByGameIdAndUserId(game.getId(), user.getId());
+        return gameUsersRepository.findGameUsersCodeByGameandUser(game,user);
     }
 }
