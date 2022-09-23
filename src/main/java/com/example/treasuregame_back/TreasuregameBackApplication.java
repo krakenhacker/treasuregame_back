@@ -3,8 +3,11 @@ package com.example.treasuregame_back;
 import com.example.treasuregame_back.View.LoginView;
 import com.example.treasuregame_back.game.GameController;
 import com.example.treasuregame_back.game.GameRepository;
+import com.vaadin.flow.component.page.AppShellConfigurator;
 import com.vaadin.flow.spring.VaadinApplicationConfiguration;
 import com.vaadin.flow.spring.security.VaadinWebSecurityConfigurerAdapter;
+import com.vaadin.flow.theme.Theme;
+import com.vaadin.flow.theme.lumo.Lumo;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -17,7 +20,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
-public class TreasuregameBackApplication extends VaadinWebSecurityConfigurerAdapter {
+@Theme(themeClass = Lumo.class, variant = Lumo.DARK)
+public class TreasuregameBackApplication extends VaadinWebSecurityConfigurerAdapter implements AppShellConfigurator {
     public static void main(String[] args) {
         SpringApplication.run(TreasuregameBackApplication.class, args);
     }
