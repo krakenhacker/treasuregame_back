@@ -23,8 +23,9 @@ public class DashboardView extends Div {
     public DashboardView(GameService service) {
         Button NewGameButton = new Button("New Game");
         NewGameButton.addClickListener( e -> UI.getCurrent().navigate(NewGameView.class));
-
-        add(new H1("Dashboard"),NewGameButton);
+        Button CopyMembersButton = new Button("Copy Members");
+        CopyMembersButton.addClickListener( e -> UI.getCurrent().navigate(CopyMembersView.class));
+        add(new H1("Dashboard"),NewGameButton,CopyMembersButton);
 
         Grid<Game> grid = new Grid<>(Game.class, false);
         setupGrid(grid,service);
