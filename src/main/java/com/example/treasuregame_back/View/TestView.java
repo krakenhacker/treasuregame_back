@@ -5,23 +5,17 @@ import com.example.treasuregame_back.game.Game;
 import com.example.treasuregame_back.game.GameService;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.H1;
-import com.vaadin.flow.component.icon.Icon;
-import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.router.RouterLink;
-import org.vaadin.crudui.crud.CrudOperation;
 import org.vaadin.crudui.crud.impl.GridCrud;
 import javax.annotation.security.RolesAllowed;
-import java.time.LocalDateTime;
 
-@Route("")
+@Route("test")
 @RolesAllowed("ADMIN")
-public class MainView extends VerticalLayout {
+public class TestView extends VerticalLayout {
 
-    public MainView(GameService service){
+    public TestView(GameService service){
         Button NewGameButton = new Button("New Game");
         NewGameButton.addClickListener( e -> UI.getCurrent().navigate(NewGameView.class));
 
