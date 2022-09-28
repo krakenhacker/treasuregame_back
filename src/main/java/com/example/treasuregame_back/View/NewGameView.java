@@ -63,7 +63,11 @@ public class NewGameView extends VerticalLayout  {
                     user = saveUserIfnotExist(user);
                     Long savedgameid = service.getNextVal();
                     binder.writeBeanIfValid(game);
-                    service.addGameWithUser(game,user);
+                    if(user==(null)){
+                        service.add(game);
+                    }else {
+                        service.addGameWithUser(game, user);
+                    }
                     Notification.show("Game Saved.");
                     binder.readBean(new Game());
                     game.setId(savedgameid);
@@ -73,9 +77,11 @@ public class NewGameView extends VerticalLayout  {
         );
     }
     public void sendmail(Game game,User user){
-        GameUsers gameUsers = gameUsersService.searchCode(game, user);
-        String msgtext =String.format("You have been invited to game: "+game.getName()+"  starting at  "+game.getStart()+"  use invitation code:  " +gameUsers.getCode());
-        emailService.sendSimpleMessage(user.getEmail(),"Treasure Game Invitation",msgtext);
+        if(user!=(null)){
+            GameUsers gameUsers = gameUsersService.searchCode(game, user);
+            String msgtext = String.format("You have been invited to game: " + game.getName() + "  starting at  " + game.getStart() + "  use invitation code:  " + gameUsers.getCode());
+            emailService.sendSimpleMessage(user.getEmail(), "Treasure Game Invitation", msgtext);
+        }
     }
 
 
@@ -94,8 +100,11 @@ public class NewGameView extends VerticalLayout  {
             return user;
         }
         else{
-            userService.add(user);
-            return user;
+            if(!validEmailField.isEmpty()) {
+                userService.add(user);
+                return user;
+            }
+            return null;
         }
     }
 }
