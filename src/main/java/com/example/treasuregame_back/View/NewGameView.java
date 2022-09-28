@@ -52,6 +52,9 @@ public class NewGameView extends VerticalLayout  {
     public NewGameView(GameService service){
         var binder = new Binder<>(Game.class);
         binder.bindInstanceFields(this);
+        validEmailField.setPattern("^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@" + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$");
+        validEmailField.setClearButtonVisible(true);
+        validEmailField.setErrorMessage("Please enter a valid email address");
 
         add(
                 new H1("New Game"),
