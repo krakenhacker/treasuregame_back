@@ -78,14 +78,11 @@ public class NewGameView extends VerticalLayout  {
     }
     public void sendmail(Game game,User user){
         if(user!=(null)){
-            GameUsers gameUsers = gameUsersService.searchCode(game, user);
+            GameUsers gameUsers = gameUsersService.searchGameUser(game, user);
             String msgtext = String.format("You have been invited to game: " + game.getName() + "  starting at  " + game.getStart() + "  use invitation code:  " + gameUsers.getCode());
             emailService.sendSimpleMessage(user.getEmail(), "Treasure Game Invitation", msgtext);
         }
     }
-
-
-
     public Component NumberFieldStep(NumberField numberField) {
         this.duration=numberField;
         numberField.setStep(0.5);

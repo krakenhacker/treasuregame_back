@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.vaadin.crudui.crud.CrudListener;
 
 import java.util.Collection;
+import java.util.List;
 
 
 @Service
@@ -35,7 +36,22 @@ public class GameUsersService implements CrudListener<GameUsers> {
         gameUsersRepository.delete(gameUsers);
     }
 
-    public GameUsers searchCode(Game game, User user){
-        return gameUsersRepository.findGameUsersCodeByGameandUser(game,user);
+    public GameUsers searchGameUser(Game game, User user){
+        return gameUsersRepository.findGameUsersByGameAndUser(game,user);
+    }
+
+    public List<User> findInvitedUsersFromGame(Game game){
+        return gameUsersRepository.findInvitedUsersFromGame(game);
+    }
+
+    public GameUsers findGameUserById(Long id){
+        return gameUsersRepository.findGameUsersById(id);
+    }
+    public boolean checkifexist(Game game, User user){
+        if(gameUsersRepository.findGameUsersByGameAndUser(game,user)==null){
+            return false;
+        }else{
+            return true;
+        }
     }
 }
