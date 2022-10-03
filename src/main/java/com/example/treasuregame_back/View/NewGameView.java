@@ -6,27 +6,29 @@ import com.example.treasuregame_back.GameUsers.GameUsersService;
 import com.example.treasuregame_back.game.Game;
 import com.example.treasuregame_back.game.GameService;
 import com.example.treasuregame_back.user.User;
-import com.example.treasuregame_back.user.UserRepository;
 import com.example.treasuregame_back.user.UserService;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.datepicker.DatePicker;
+import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.datetimepicker.DateTimePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.grid.ColumnTextAlign;
+import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.*;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.component.timepicker.TimePicker;
+import com.vaadin.flow.component.virtuallist.VirtualList;
 import com.vaadin.flow.data.binder.Binder;
-import com.vaadin.flow.data.converter.StringToDoubleConverter;
+import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 
 import javax.annotation.security.RolesAllowed;
-import java.awt.*;
+import java.util.*;
 
 @Route("new")
 @RolesAllowed("ADMIN")
@@ -47,37 +49,53 @@ public class NewGameView extends VerticalLayout  {
     private NumberField z = new NumberField("Z");
 
     private EmailField validEmailField = new EmailField("Email Adress:");
+    private List<User> invitedusers = new ArrayList<User>();
 
 
     public NewGameView(GameService service){
         var binder = new Binder<>(Game.class);
         binder.bindInstanceFields(this);
+        Grid<User> grid = new Grid<>(User.class, false);
         validEmailField.setPattern("^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@" + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$");
         validEmailField.setClearButtonVisible(true);
         validEmailField.setErrorMessage("Please enter a valid email address");
+        Button addusertolistbutton = new Button("Add to list");
+        addusertolistbutton.addClickListener(e ->{
+           invitedusers.add(new User(validEmailField.getValue()));
+           grid.getDataProvider().refreshAll();
+           validEmailField.clear();
+           Notification.show("User added");
+        });
 
         add(
                 new H1("New Game"),
                 new FormLayout(name,start,NumberFieldStep(duration),x,y,w,z),
-                validEmailField,
+                validEmailField,addusertolistbutton,
                 new Button("Save", event ->{
                     var game = new Game();
-                    User user = new User();
-                    user = saveUserIfnotExist(user);
                     Long savedgameid = service.getNextVal();
                     binder.writeBeanIfValid(game);
-                    if(user==(null)){
-                        service.add(game);
-                    }else {
-                        service.addGameWithUser(game, user);
-                    }
+                    service.add(game);
                     Notification.show("Game Saved.");
                     binder.readBean(new Game());
                     game.setId(savedgameid);
-                    sendmail(game,user);
+                    for(int i=0;i<invitedusers.size();i++) {
+                        GameUsers gameUsers = new GameUsers();
+                        gameUsers.setGame(game);
+                        User user = saveUserIfnotExist(invitedusers.get(i));
+                        gameUsers.setUser(user);
+                        gameUsers.setCode(service.getRandomNumber());
+                        gameUsersService.add(gameUsers);
+                        sendmail(game,user);
+                        Notification.show("invited member: "+invitedusers.get(i).getEmail()+"\nto game: "+game.getName());
+                    }
+                    invitedusers.clear();
+                    grid.getDataProvider().refreshAll();
+
                 })
 
         );
+        VirtualListSetup(grid);
     }
     public void sendmail(Game game,User user){
         if(user!=(null)){
@@ -94,17 +112,37 @@ public class NewGameView extends VerticalLayout  {
         return numberField;
     }
     public User saveUserIfnotExist(User user){
-        user.setEmail(validEmailField.getValue());
         if(userService.IfUserExist(user)) {
             user = userService.findUserByEmail(user.getEmail());
             return user;
         }
         else{
-            if(!validEmailField.isEmpty()) {
-                userService.add(user);
-                return user;
-            }
-            return null;
+            userService.add(user);
+            user = userService.findUserByEmail(user.getEmail());
+            return user;
         }
+    }
+    private void VirtualListSetup(Grid<User> grid) {
+        grid.addColumn(User::getEmail).setHeader("Email");
+        grid.addColumn(
+                new ComponentRenderer<>(Button::new, (button, user) -> {
+                    button.addThemeVariants(ButtonVariant.LUMO_ICON,
+                            ButtonVariant.LUMO_ERROR,
+                            ButtonVariant.LUMO_TERTIARY);
+                    button.addClickListener(e -> {
+                        this.removeInvitation(user);
+                        grid.getDataProvider().refreshAll();
+                    });
+                    button.setIcon(new Icon(VaadinIcon.TRASH));
+                })).setHeader("Manage").setTextAlign(ColumnTextAlign.END).setWidth("100px");
+        grid.setAllRowsVisible(true);
+        grid.setItems(invitedusers);
+        add(grid);
+    }
+
+    private void removeInvitation(User user) {
+        if (user == null)
+            return;
+        invitedusers.remove(user);
     }
 }
