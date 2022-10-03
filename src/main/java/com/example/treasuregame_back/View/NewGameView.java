@@ -12,14 +12,18 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.datetimepicker.DateTimePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.grid.ColumnTextAlign;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.*;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.virtuallist.VirtualList;
 import com.vaadin.flow.data.binder.Binder;
+import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -120,8 +124,25 @@ public class NewGameView extends VerticalLayout  {
     }
     private void VirtualListSetup(Grid<User> grid) {
         grid.addColumn(User::getEmail).setHeader("Email");
+        grid.addColumn(
+                new ComponentRenderer<>(Button::new, (button, user) -> {
+                    button.addThemeVariants(ButtonVariant.LUMO_ICON,
+                            ButtonVariant.LUMO_ERROR,
+                            ButtonVariant.LUMO_TERTIARY);
+                    button.addClickListener(e -> {
+                        this.removeInvitation(user);
+                        grid.getDataProvider().refreshAll();
+                    });
+                    button.setIcon(new Icon(VaadinIcon.TRASH));
+                })).setHeader("Manage").setTextAlign(ColumnTextAlign.END).setWidth("100px");
         grid.setAllRowsVisible(true);
         grid.setItems(invitedusers);
         add(grid);
+    }
+
+    private void removeInvitation(User user) {
+        if (user == null)
+            return;
+        invitedusers.remove(user);
     }
 }
