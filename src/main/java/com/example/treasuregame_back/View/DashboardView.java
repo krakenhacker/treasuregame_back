@@ -48,7 +48,7 @@ public class DashboardView extends Div {
 
         grid.addColumn(Game::getName).setHeader("Name").setKey("Name");
         grid.addColumn(new LocalDateTimeRenderer<>(Game::getStart,"dd-MM-yyyy HH:mm")).setHeader("Start").setSortable(true).setKey("Start");;
-        grid.addColumn(Game::getDuration).setHeader("Duration").setSortable(true).setKey("Duration");
+        grid.addColumn(Game::getDuration).setHeader("Duration(hours)").setSortable(true).setKey("Duration");
         grid.addColumn(Game::getX).setHeader("X").setKey("X").setWidth("90px").setFlexGrow(0);
         grid.addColumn(Game::getY).setHeader("Y").setKey("Y").setWidth("90px").setFlexGrow(0);
         grid.addColumn(Game::getW).setHeader("W").setKey("W").setWidth("90px").setFlexGrow(0);
@@ -141,7 +141,6 @@ public class DashboardView extends Div {
                 cancelButton);
         actions.setPadding(false);
         editColumn.setEditorComponent(actions);
-
         Collection<Game> games = service.findAll();
         grid.setItems(games);
         add(grid);
