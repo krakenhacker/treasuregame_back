@@ -1,25 +1,32 @@
 package com.example.treasuregame_back.View;
+import com.example.treasuregame_back.GameUsers.GameUsersService;
 import com.example.treasuregame_back.game.Game;
 import com.example.treasuregame_back.game.GameService;
+import com.example.treasuregame_back.user.User;
+import com.example.treasuregame_back.user.UserService;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.datetimepicker.DateTimePicker;
+import com.vaadin.flow.component.grid.ColumnTextAlign;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.editor.Editor;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
+import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.renderer.LocalDateTimeRenderer;
 import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.annotation.security.RolesAllowed;
 import java.util.Collection;
+import java.util.Optional;
 
 
 @Route("")
@@ -27,6 +34,10 @@ import java.util.Collection;
 public class DashboardView extends Div {
     @Autowired
     private GameService gameService;
+    @Autowired
+    private GameUsersService gameUsersService;
+    @Autowired
+    private UserService userService;
 
     public DashboardView(GameService service) {
         Button NewGameButton = new Button("New Game");
@@ -36,7 +47,35 @@ public class DashboardView extends Div {
         add(new H1("Dashboard"),NewGameButton,CopyMembersButton);
 
         Grid<Game> grid = new Grid<>(Game.class, false);
+        Grid<User> membergrid = new Grid<>(User.class, false);
         setupGrid(grid,service);
+        setupMemberView(grid,membergrid);
+    }
+
+    private void setupMemberView(Grid<Game> grid,Grid<User> membergrid) {
+        add(new H1("Invited Members"));
+        membergrid.addColumn(User::getNickname).setHeader("Nickname");
+        membergrid.addColumn(User::getEmail).setHeader("Email");
+        membergrid.addColumn(
+                new ComponentRenderer<>(Button::new, (button, user) -> {
+                    button.addThemeVariants(ButtonVariant.LUMO_ICON,
+                            ButtonVariant.LUMO_ERROR,
+                            ButtonVariant.LUMO_TERTIARY);
+                    button.addClickListener(e -> {
+                        Game game = grid.getSelectedItems().stream().toList().get(0);
+                        gameUsersService.delete(gameUsersService.searchGameUser(game,user));
+                        membergrid.setItems(gameUsersService.findInvitedUsersFromGame(game));
+                        membergrid.getDataProvider().refreshAll();
+                    });
+                    button.setIcon(new Icon(VaadinIcon.TRASH));
+                })).setHeader("Manage").setTextAlign(ColumnTextAlign.END).setWidth("100px");
+        grid.addSelectionListener(selection -> {
+            Optional<Game> game = selection.getFirstSelectedItem();
+            if (game.isPresent()) {
+                membergrid.setItems(gameUsersService.findInvitedUsersFromGame(game.get()));
+                add(membergrid);
+            }
+        });
     }
 
     public void setupGrid(Grid<Game> grid,GameService service){
