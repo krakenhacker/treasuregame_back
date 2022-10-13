@@ -39,12 +39,16 @@ public class UserService  implements CrudListener<User> {
     public User findUserByEmail(String email){
         return userRepository.findUserByEmail(email);
     }
-    public boolean IfUserExist(User user){
+
+    public User saveUserIfnotExist(User user){
         if(userRepository.findUserByEmail(user.getEmail())!=null) {
-            return true;
+            user = userRepository.findUserByEmail(user.getEmail());
+            return user;
         }
         else{
-            return false;
+            userRepository.save(user);
+            user = userRepository.findUserByEmail(user.getEmail());
+            return user;
         }
     }
 }

@@ -48,8 +48,36 @@ class GameServiceTest {
                 assertEquals(11.5,game.getY());
                 assertEquals(12.5,game.getZ());
                 assertEquals(13.5,game.getW());
-
-
-
         }
+
+        @Test
+        void GetRandomNumberMustReturn6digitNumber(){
+                int i = service.getRandomNumber();
+                int array[] = new int[1000000];
+                boolean flag = false;
+                for (int y = 0; y < array.length; y++)
+                {
+                        array[y] = y + 100000;
+                        if(array[y]==i){
+                                flag = true;
+                                break;
+                        }
+                }
+                assertEquals(true,flag);
+        }
+
+        @Test
+        void FindGameByIdMustReturnOneGame(){
+                Game game = new Game("test", DateStartTest,0.5,10.5,11.5,12.5,13.5);
+                when(service.findGameById(1L)).thenReturn(game);
+                assertEquals(service.findGameById(1L),game);
+        }
+
+        @Test
+        void GetNextValMustReturnLong(){
+                when(service.getNextVal()).thenReturn(2L);
+                assertEquals(service.getNextVal(),2L);
+        }
+
+
     }
