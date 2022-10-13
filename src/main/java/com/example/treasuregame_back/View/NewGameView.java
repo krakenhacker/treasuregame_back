@@ -82,7 +82,7 @@ public class NewGameView extends VerticalLayout  {
                     for(int i=0;i<invitedusers.size();i++) {
                         GameUsers gameUsers = new GameUsers();
                         gameUsers.setGame(game);
-                        User user = saveUserIfnotExist(invitedusers.get(i));
+                        User user = userService.saveUserIfnotExist(invitedusers.get(i));
                         gameUsers.setUser(user);
                         gameUsers.setCode(service.getRandomNumber());
                         gameUsersService.add(gameUsers);
@@ -110,17 +110,6 @@ public class NewGameView extends VerticalLayout  {
         numberField.setValue(0.5);
         numberField.setHasControls(true);
         return numberField;
-    }
-    public User saveUserIfnotExist(User user){
-        if(userService.IfUserExist(user)) {
-            user = userService.findUserByEmail(user.getEmail());
-            return user;
-        }
-        else{
-            userService.add(user);
-            user = userService.findUserByEmail(user.getEmail());
-            return user;
-        }
     }
     private void VirtualListSetup(Grid<User> grid) {
         grid.addColumn(User::getEmail).setHeader("Email");

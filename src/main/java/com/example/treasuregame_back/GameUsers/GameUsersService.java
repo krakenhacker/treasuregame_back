@@ -54,4 +54,12 @@ public class GameUsersService implements CrudListener<GameUsers> {
             return true;
         }
     }
+
+    public boolean checkIfCodeIsUnique(int code){
+        if(gameUsersRepository.findCode(code)==null){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

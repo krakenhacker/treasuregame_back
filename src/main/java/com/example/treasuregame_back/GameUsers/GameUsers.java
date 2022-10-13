@@ -27,6 +27,13 @@ public class GameUsers {
     public GameUsers() {
     }
 
+    public GameUsers(Long id, Game game, User user, int code) {
+        this.id = id;
+        this.game = game;
+        this.user = user;
+        this.code = code;
+    }
+
     public GameUsers(User user, int code) {
         this.user = user;
         this.code = code;

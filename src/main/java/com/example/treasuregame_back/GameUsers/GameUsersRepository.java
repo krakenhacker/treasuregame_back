@@ -21,5 +21,8 @@ public interface GameUsersRepository extends JpaRepository<GameUsers, Long> {
     @Query("select u from User u,GameUsers gu,Game g where u=gu.user and g=gu.game and gu.game=:game")
     List<User> findInvitedUsersFromGame(Game game);
 
+    @Query("select gu.code from GameUsers gu where gu.code=:code")
+    Integer findCode(int code);
+
 
 }
