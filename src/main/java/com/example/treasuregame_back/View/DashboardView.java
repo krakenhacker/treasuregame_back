@@ -29,7 +29,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 
-@Route(value = "" ,layout = TestView.class)
+@Route(value = "" ,layout = MainLayoutView.class)
 @RolesAllowed("ADMIN")
 public class DashboardView extends Div {
     @Autowired
