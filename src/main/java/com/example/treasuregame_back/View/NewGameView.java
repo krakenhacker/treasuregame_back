@@ -19,14 +19,9 @@ import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.map.configuration.Coordinate;
-import com.vaadin.flow.component.map.configuration.Extent;
-import com.vaadin.flow.component.map.configuration.feature.MarkerFeature;
 import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.*;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.component.virtuallist.VirtualList;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.router.Route;
@@ -36,7 +31,7 @@ import com.vaadin.flow.component.map.Map;
 import javax.annotation.security.RolesAllowed;
 import java.util.*;
 
-@Route(value = "NewGame", layout = TestView.class)
+@Route(value = "NewGame", layout = MainLayoutView.class)
 @RolesAllowed("ADMIN")
 public class NewGameView extends Div {
     @Autowired
@@ -47,7 +42,7 @@ public class NewGameView extends Div {
     private GameUsersService gameUsersService;
     private TextField name = new TextField("Name");
     private DateTimePicker start = new DateTimePicker("Starts");
-    private NumberField duration = new NumberField("Duration (hdsadawsours)");
+    private NumberField duration = new NumberField("Duration (hours)");
 
     private NumberField x = new NumberField("X");
     private NumberField y = new NumberField("Y");
@@ -61,6 +56,10 @@ public class NewGameView extends Div {
 
     int count = 0;
     public NewGameView(GameService service){
+        x.setValue(null);
+        y.setValue(null);
+        w.setValue(null);
+        z.setValue(null);
         Map map = new Map();
         map.setCenter(new Coordinate(2621547.3341012127,5025770.094437827));
         map.setZoom(15);
@@ -71,6 +70,8 @@ public class NewGameView extends Div {
             if(count%2==0) {
                 x.setValue(coordinates.getX());
                 y.setValue(coordinates.getY());
+                w.setValue(null);
+                z.setValue(null);
             }else {
                 w.setValue(coordinates.getX());
                 z.setValue(coordinates.getY());
@@ -114,7 +115,7 @@ public class NewGameView extends Div {
                     Long savedgameid = service.getNextVal();
                     binder.writeBeanIfValid(game);
                     service.add(game);
-                    Notification.show("Game Saved.");
+                    Notification.show("Game Saved");
                     binder.readBean(new Game());
                     game.setId(savedgameid);
                     for(int i=0;i<invitedusers.size();i++) {

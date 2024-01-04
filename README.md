@@ -81,5 +81,5 @@ $ target/treasuregame_back
 ```
 Live Reload
 ```
-$ mvn spring-boot:run
+$ ./mvnw spring-boot:run
 ```
