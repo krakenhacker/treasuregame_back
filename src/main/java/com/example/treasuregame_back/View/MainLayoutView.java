@@ -31,8 +31,8 @@ public class MainLayoutView extends AppLayout {
     private void createDrawer() {
         addToDrawer(new VerticalLayout(
                 new RouterLink("Dashboard", DashboardView.class),
-                new RouterLink("NewGame", NewGameView.class),
-                new RouterLink("Test", TestView.class)
+                new RouterLink("NewGame", NewGameView.class)
+//                new RouterLink("Test", TestView.class)
         ));
     }
 
