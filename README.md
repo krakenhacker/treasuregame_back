@@ -79,3 +79,7 @@ Then, you can run the app as follows:
 ```
 $ target/treasuregame_back
 ```
+Live Reload
+```
+$ ./mvnw spring-boot:run
+```

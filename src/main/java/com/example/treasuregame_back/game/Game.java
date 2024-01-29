@@ -6,8 +6,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -36,19 +39,26 @@ public final class Game {
     @Column(name = "game_id")
     private Long id;
     @Column(name = "name")
+    @NotNull
     private String name;
     @Column(name = "start")
+    @NotNull
     private LocalDateTime start;
     @Column(name = "duration")
+    @NotNull
     private double duration;
 
     @Column(name = "x")
+    @NotNull
     private double x;
     @Column(name = "y")
+    @NotNull
     private double y;
     @Column(name = "w")
+    @NotNull
     private double w;
     @Column(name = "z")
+    @NotNull
     private double z;
 
     public Game() {
