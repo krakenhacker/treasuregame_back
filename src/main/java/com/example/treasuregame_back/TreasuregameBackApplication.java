@@ -19,6 +19,8 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static com.vaadin.flow.spring.security.VaadinWebSecurityConfigurerAdapter.getDefaultWebSecurityIgnoreMatcher;
+
 @SpringBootApplication
 @Theme(themeClass = Lumo.class, variant = Lumo.DARK)
 public class TreasuregameBackApplication extends VaadinWebSecurityConfigurerAdapter implements AppShellConfigurator {

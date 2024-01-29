@@ -14,25 +14,26 @@ import com.vaadin.flow.component.datetimepicker.DateTimePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.ColumnTextAlign;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.map.configuration.Coordinate;
 import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.*;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.component.virtuallist.VirtualList;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
+import com.vaadin.flow.component.map.Map;
 
 import javax.annotation.security.RolesAllowed;
 import java.util.*;
 
-@Route("new")
+@Route(value = "NewGame", layout = MainLayoutView.class)
 @RolesAllowed("ADMIN")
-public class NewGameView extends VerticalLayout  {
+public class NewGameView extends Div {
     @Autowired
     private UserService userService;
     @Autowired
@@ -48,17 +49,41 @@ public class NewGameView extends VerticalLayout  {
     private NumberField w = new NumberField("W");
     private NumberField z = new NumberField("Z");
 
+
     private EmailField validEmailField = new EmailField("Email Adress:");
     private List<User> invitedusers = new ArrayList<User>();
 
 
+    int count = 0;
     public NewGameView(GameService service){
+        x.setValue(null);
+        y.setValue(null);
+        w.setValue(null);
+        z.setValue(null);
+        Map map = new Map();
+        map.setCenter(new Coordinate(2621547.3341012127,5025770.094437827));
+        map.setZoom(15);
+        map.addClickEventListener(e -> {
+            Coordinate coordinates = e.getCoordinate();
+            String info = String.format("Coordinates = { x: %s, y: %s }",
+                    coordinates.getX(), coordinates.getY());
+            if(count%2==0) {
+                x.setValue(coordinates.getX());
+                y.setValue(coordinates.getY());
+                w.setValue(null);
+                z.setValue(null);
+            }else {
+                w.setValue(coordinates.getX());
+                z.setValue(coordinates.getY());
+            }
+            count++;
+        });
+
         var binder = new Binder<>(Game.class);
         binder.bindInstanceFields(this);
         Grid<User> grid = new Grid<>(User.class, false);
-        validEmailField.setPattern("^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@" + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$");
+        validEmailField.setPattern("^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$");
         validEmailField.setClearButtonVisible(true);
-        validEmailField.setErrorMessage("Please enter a valid email address");
         Button addusertolistbutton = new Button("Add to list");
         addusertolistbutton.addClickListener(e ->{
            invitedusers.add(new User(validEmailField.getValue()));
@@ -66,17 +91,31 @@ public class NewGameView extends VerticalLayout  {
            validEmailField.clear();
            Notification.show("User added");
         });
-
+        FormLayout formLayout  = new FormLayout();
+        formLayout.setResponsiveSteps(
+                new FormLayout.ResponsiveStep("0", 1),
+                new FormLayout.ResponsiveStep("500px", 2),
+                new FormLayout.ResponsiveStep("1000px", 3),
+                new FormLayout.ResponsiveStep("1200px", 4)
+        );
+        formLayout.setColspan(map, 4);
+        formLayout.setColspan(start, 2);
+        formLayout.setColspan(x, 2);
+        formLayout.setColspan(y, 2);
+        formLayout.setColspan(w, 2);
+        formLayout.setColspan(z, 2);
+        formLayout.add(name,start,NumberFieldStep(duration),x,y,w,z,map);
         add(
                 new H1("New Game"),
-                new FormLayout(name,start,NumberFieldStep(duration),x,y,w,z),
+
+                formLayout,
                 validEmailField,addusertolistbutton,
                 new Button("Save", event ->{
                     var game = new Game();
                     Long savedgameid = service.getNextVal();
                     binder.writeBeanIfValid(game);
                     service.add(game);
-                    Notification.show("Game Saved.");
+                    Notification.show("Game Saved");
                     binder.readBean(new Game());
                     game.setId(savedgameid);
                     for(int i=0;i<invitedusers.size();i++) {
