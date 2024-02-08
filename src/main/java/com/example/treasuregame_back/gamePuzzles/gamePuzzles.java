@@ -3,6 +3,7 @@ package com.example.treasuregame_back.gamePuzzles;
 import com.example.treasuregame_back.game.Game;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "gamePuzzles")
@@ -16,19 +17,38 @@ public class gamePuzzles {
     private Game game;
 
     @Column(name = "puzzle")
-    private int puzzle;
+    @NotNull
+    private String puzzle;
 
     @Column(name = "answer")
-    private int answer;
+    @NotNull
+    private String answer;
 
-    public gamePuzzles(Game game, int puzzle, int answer) {
+    @Column(name = "x")
+    @NotNull
+    private double x;
+    @Column(name = "y")
+    @NotNull
+    private double y;
+
+    public gamePuzzles(Long id, Game game, String puzzle, String answer, double x, double y) {
+        this.id = id;
         this.game = game;
         this.puzzle = puzzle;
         this.answer = answer;
+        this.x = x;
+        this.y = y;
+    }
+
+    public gamePuzzles(Game game, String puzzle, String answer, double x, double y) {
+        this.game = game;
+        this.puzzle = puzzle;
+        this.answer = answer;
+        this.x = x;
+        this.y = y;
     }
 
     public gamePuzzles() {
-
     }
 
     public Long getId() {
@@ -47,19 +67,35 @@ public class gamePuzzles {
         this.game = game;
     }
 
-    public int getPuzzle() {
+    public String getPuzzle() {
         return puzzle;
     }
 
-    public void setPuzzle(int puzzle) {
+    public void setPuzzle(String puzzle) {
         this.puzzle = puzzle;
     }
 
-    public int getAnswer() {
+    public String getAnswer() {
         return answer;
     }
 
-    public void setAnswer(int answer) {
+    public void setAnswer(String answer) {
         this.answer = answer;
+    }
+
+    public double getX() {
+        return x;
+    }
+
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public void setY(double y) {
+        this.y = y;
     }
 }
