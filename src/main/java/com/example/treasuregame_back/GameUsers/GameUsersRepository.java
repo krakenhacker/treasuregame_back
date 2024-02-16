@@ -24,5 +24,8 @@ public interface GameUsersRepository extends JpaRepository<GameUsers, Long> {
     @Query("select gu.code from GameUsers gu where gu.code=:code")
     Integer findCode(int code);
 
+    @Query("select g from Game g,GameUsers gu where gu.code=:code and g.id=gu.game.id")
+    Game findGameByCode(int code);
+
 
 }
