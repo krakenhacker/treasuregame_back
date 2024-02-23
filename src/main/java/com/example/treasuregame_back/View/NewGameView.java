@@ -21,6 +21,9 @@ import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.map.configuration.Coordinate;
+import com.vaadin.flow.component.map.configuration.View;
+import com.vaadin.flow.component.map.configuration.layer.TileLayer;
+import com.vaadin.flow.component.map.configuration.source.OSMSource;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.textfield.*;
 import com.vaadin.flow.component.textfield.TextField;
@@ -62,21 +65,18 @@ public class NewGameView extends Div {
 
     private NumberField puzzleX = new NumberField("Puzzle X");
     private NumberField puzzleY = new NumberField("Puzzle Y");
-
-
     int count = 0;
     public NewGameView(GameService service){
-        x.setValue(null);
-        y.setValue(null);
-        w.setValue(null);
-        z.setValue(null);
+//        x.setValue(null);
+//        y.setValue(null);
+//        w.setValue(null);
+//        z.setValue(null);
         Map map = new Map();
-        map.setCenter(new Coordinate(2621547.3341012127,5025770.094437827));
+        map.setCenter(new Coordinate(2615595.473095732,5027261.561026261));
+//        map.setCenter(Coordinate.fromLonLat(23.496590, 41.101525));
         map.setZoom(15);
         map.addClickEventListener(e -> {
             Coordinate coordinates = e.getCoordinate();
-            String info = String.format("Coordinates = { x: %s, y: %s }",
-                    coordinates.getX(), coordinates.getY());
             if(count%2==0 && count<=1) {
                 x.setValue(coordinates.getX());
                 y.setValue(coordinates.getY());
