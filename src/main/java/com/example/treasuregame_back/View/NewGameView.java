@@ -65,6 +65,8 @@ public class NewGameView extends Div {
 
     private NumberField puzzleX = new NumberField("Puzzle X");
     private NumberField puzzleY = new NumberField("Puzzle Y");
+
+    private TextField puzzleHint = new TextField("Puzzle Hint");
     int count = 0;
     public NewGameView(GameService service){
 //        x.setValue(null);
@@ -122,7 +124,7 @@ public class NewGameView extends Div {
         formLayout.setColspan(y, 2);
         formLayout.setColspan(w, 2);
         formLayout.setColspan(z, 2);
-        formLayout.add(name,start,NumberFieldStep(duration),x,y,w,z,map,puzzle,puzzleAnswer,puzzleX,puzzleY);
+        formLayout.add(name,start,NumberFieldStep(duration),x,y,w,z,map,puzzle,puzzleAnswer,puzzleX,puzzleY,puzzleHint);
         add(
                 new H1("New Game"),
 
@@ -143,11 +145,11 @@ public class NewGameView extends Div {
                         gameUsers.setUser(user);
                         gameUsers.setCode(service.getRandomNumber());
                         gameUsersService.add(gameUsers);
-                        sendmail(game,user);
+//                        sendmail(game,user);
                         Notification.show("invited member: "+invitedusers.get(i).getEmail()+"\nto game: "+game.getName());
                     }
-                    gamePuzzles gamePuzzles = new gamePuzzles(game,puzzle.getValue(),puzzleAnswer.getValue(),puzzleX.getValue(),puzzleY.getValue());
-                    gamePuzzlesService.add(new gamePuzzles(game,"10-3","7",0,0));
+                    gamePuzzles gamePuzzles = new gamePuzzles(game,puzzle.getValue(),puzzleAnswer.getValue(),puzzleX.getValue(),puzzleY.getValue(),puzzleHint.getValue());
+                    gamePuzzlesService.add(new gamePuzzles(game,"10-3","7",0,0,"no hint"));
                     gamePuzzlesService.add(gamePuzzles);
                     invitedusers.clear();
                     grid.getDataProvider().refreshAll();
