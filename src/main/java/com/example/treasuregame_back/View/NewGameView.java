@@ -145,7 +145,7 @@ public class NewGameView extends Div {
                         gameUsers.setUser(user);
                         gameUsers.setCode(service.getRandomNumber());
                         gameUsersService.add(gameUsers);
-//                        sendmail(game,user);
+                        sendmail(game,user);
                         Notification.show("invited member: "+invitedusers.get(i).getEmail()+"\nto game: "+game.getName());
                     }
                     gamePuzzles gamePuzzles = new gamePuzzles(game,puzzle.getValue(),puzzleAnswer.getValue(),puzzleX.getValue(),puzzleY.getValue(),puzzleHint.getValue());
