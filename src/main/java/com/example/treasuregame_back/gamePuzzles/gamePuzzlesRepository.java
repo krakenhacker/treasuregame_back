@@ -7,13 +7,19 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
 import java.util.List;
 
 @Repository
 public interface gamePuzzlesRepository extends JpaRepository<gamePuzzles, Long> {
 
-    @Query("select gp from gamePuzzles gp where gp.game = ?1")
-    GameUsers findGamePuzzleByGame(Game game);
+    @Query("select gp from gamePuzzles gp where gp.game = :game")
+    Collection<gamePuzzles> findGamePuzzleByGame(Game game);
+
+    @Query("select gp from gamePuzzles gp where gp.game.id= ?1")
+    Collection<gamePuzzles> findGamePuzzleByGameId(Long id);
+
+
 
 //    @Query("select gu from GameUsers gu,Game g,User u where u=gu.user and g=gu.game and gu.game=:game and gu.user=:user")
 //    GameUsers findGameUsersByGameAndUser(Game game, User user);

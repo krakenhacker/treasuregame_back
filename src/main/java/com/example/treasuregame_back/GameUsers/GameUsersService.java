@@ -40,6 +40,10 @@ public class GameUsersService implements CrudListener<GameUsers> {
         return gameUsersRepository.findGameUsersByGameAndUser(game,user);
     }
 
+    public Game findGameByCode(int code){
+        return gameUsersRepository.findGameByCode(code);
+    }
+
     public List<User> findInvitedUsersFromGame(Game game){
         return gameUsersRepository.findInvitedUsersFromGame(game);
     }

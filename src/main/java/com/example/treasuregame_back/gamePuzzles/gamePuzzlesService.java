@@ -1,5 +1,6 @@
 package com.example.treasuregame_back.gamePuzzles;
 
+import com.example.treasuregame_back.game.Game;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.vaadin.crudui.crud.CrudListener;
@@ -35,5 +36,13 @@ public class gamePuzzlesService implements CrudListener<gamePuzzles> {
     @Override
     public void delete(gamePuzzles gamePuzzles) {
         gamePuzzlesRepository.delete(gamePuzzles);
+    }
+
+    public Collection<gamePuzzles> getGamePuzzleByGame(Game game){
+        return gamePuzzlesRepository.findGamePuzzleByGame(game);
+    }
+
+    public Collection<gamePuzzles> getGamePuzzleByGameId(Long id){
+        return gamePuzzlesRepository.findGamePuzzleByGameId(id);
     }
 }
