@@ -1,6 +1,8 @@
 package com.example.treasuregame_back.View;
 
 import com.example.treasuregame_back.Email.EmailServiceImpl;
+import com.example.treasuregame_back.gamePuzzles.gamePuzzles;
+import com.example.treasuregame_back.gamePuzzles.gamePuzzlesService;
 import com.example.treasuregame_back.GameUsers.GameUsers;
 import com.example.treasuregame_back.GameUsers.GameUsersService;
 import com.example.treasuregame_back.game.Game;
@@ -19,6 +21,9 @@ import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.map.configuration.Coordinate;
+import com.vaadin.flow.component.map.configuration.View;
+import com.vaadin.flow.component.map.configuration.layer.TileLayer;
+import com.vaadin.flow.component.map.configuration.source.OSMSource;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.textfield.*;
 import com.vaadin.flow.component.textfield.TextField;
@@ -40,6 +45,8 @@ public class NewGameView extends Div {
     private EmailServiceImpl emailService;
     @Autowired
     private GameUsersService gameUsersService;
+    @Autowired
+    private  gamePuzzlesService gamePuzzlesService;
     private TextField name = new TextField("Name");
     private DateTimePicker start = new DateTimePicker("Starts");
     private NumberField duration = new NumberField("Duration (hours)");
@@ -53,28 +60,41 @@ public class NewGameView extends Div {
     private EmailField validEmailField = new EmailField("Email Adress:");
     private List<User> invitedusers = new ArrayList<User>();
 
+    private TextField puzzle = new TextField("Puzzle");
+    private TextField puzzleAnswer = new TextField("Puzzle Answer");
 
+    private NumberField puzzleX = new NumberField("Puzzle X");
+    private NumberField puzzleY = new NumberField("Puzzle Y");
+
+    private TextField puzzleHint = new TextField("Puzzle Hint");
     int count = 0;
     public NewGameView(GameService service){
-        x.setValue(null);
-        y.setValue(null);
-        w.setValue(null);
-        z.setValue(null);
+//        x.setValue(null);
+//        y.setValue(null);
+//        w.setValue(null);
+//        z.setValue(null);
         Map map = new Map();
-        map.setCenter(new Coordinate(2621547.3341012127,5025770.094437827));
+        map.setCenter(new Coordinate(2615595.473095732,5027261.561026261));
+//        map.setCenter(Coordinate.fromLonLat(23.496590, 41.101525));
         map.setZoom(15);
         map.addClickEventListener(e -> {
             Coordinate coordinates = e.getCoordinate();
-            String info = String.format("Coordinates = { x: %s, y: %s }",
-                    coordinates.getX(), coordinates.getY());
-            if(count%2==0) {
+            if(count%2==0 && count<=1) {
                 x.setValue(coordinates.getX());
                 y.setValue(coordinates.getY());
                 w.setValue(null);
                 z.setValue(null);
-            }else {
+            } else if (count<=1) {
                 w.setValue(coordinates.getX());
                 z.setValue(coordinates.getY());
+            }else
+            {
+//                puzzle = new TextField("Puzzle " + (count-2));
+//                puzzleAnswer = new TextField("Puzzle " + (count-2) +" Answer");
+//                puzzleX = new NumberField("Puzzle " + (count-2) +" Y");
+//                puzzleY = new NumberField("Puzzle " + (count-2) +" Y");
+                puzzleX.setValue(coordinates.getX());
+                puzzleY.setValue(coordinates.getY());
             }
             count++;
         });
@@ -104,7 +124,7 @@ public class NewGameView extends Div {
         formLayout.setColspan(y, 2);
         formLayout.setColspan(w, 2);
         formLayout.setColspan(z, 2);
-        formLayout.add(name,start,NumberFieldStep(duration),x,y,w,z,map);
+        formLayout.add(name,start,NumberFieldStep(duration),x,y,w,z,map,puzzle,puzzleAnswer,puzzleX,puzzleY,puzzleHint);
         add(
                 new H1("New Game"),
 
@@ -128,6 +148,9 @@ public class NewGameView extends Div {
                         sendmail(game,user);
                         Notification.show("invited member: "+invitedusers.get(i).getEmail()+"\nto game: "+game.getName());
                     }
+                    gamePuzzles gamePuzzles = new gamePuzzles(game,puzzle.getValue(),puzzleAnswer.getValue(),puzzleX.getValue(),puzzleY.getValue(),puzzleHint.getValue());
+                    gamePuzzlesService.add(new gamePuzzles(game,"10-3","7",0,0,"no hint"));
+                    gamePuzzlesService.add(gamePuzzles);
                     invitedusers.clear();
                     grid.getDataProvider().refreshAll();
 
