@@ -1,9 +1,11 @@
 package com.example.treasuregame_back.game;
 
-import com.example.treasuregame_back.GameUsers.GameUsers;
-import com.example.treasuregame_back.user.User;
-import com.example.treasuregame_back.user.UserRepository;
-import com.vaadin.flow.server.auth.AnonymousAllowed;
+import com.example.treasuregame_back.Data.GameRepository;
+import com.example.treasuregame_back.Models.GameUsers;
+import com.example.treasuregame_back.Models.Game;
+import com.example.treasuregame_back.Services.GameService;
+import com.example.treasuregame_back.Models.User;
+import com.example.treasuregame_back.Data.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -12,9 +14,7 @@ import org.springframework.context.annotation.Configuration;
 
 import java.time.LocalDateTime;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 @Configuration
 public class GameConfig {

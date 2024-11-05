@@ -1,6 +1,8 @@
-package com.example.treasuregame_back.gamePuzzles;
+package com.example.treasuregame_back.Controllers;
 
-import com.example.treasuregame_back.game.Game;
+import com.example.treasuregame_back.Models.Game;
+import com.example.treasuregame_back.Models.gamePuzzles;
+import com.example.treasuregame_back.Services.gamePuzzlesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,7 +11,7 @@ import java.util.Collection;
 @RestController
 @RequestMapping(path ="api/v1/gamepuzzles")
 public class gamePuzzlesController {
-    private final gamePuzzlesService gamePuzzlesService;
+    private final com.example.treasuregame_back.Services.gamePuzzlesService gamePuzzlesService;
 
     @Autowired
     public gamePuzzlesController(gamePuzzlesService gamePuzzlesService) {

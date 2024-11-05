@@ -1,10 +1,7 @@
 package com.example.treasuregame_back;
 
 import com.example.treasuregame_back.View.LoginView;
-import com.example.treasuregame_back.game.GameController;
-import com.example.treasuregame_back.game.GameRepository;
 import com.vaadin.flow.component.page.AppShellConfigurator;
-import com.vaadin.flow.spring.VaadinApplicationConfiguration;
 import com.vaadin.flow.spring.security.VaadinWebSecurityConfigurerAdapter;
 import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.lumo.Lumo;
@@ -16,8 +13,6 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import static com.vaadin.flow.spring.security.VaadinWebSecurityConfigurerAdapter.getDefaultWebSecurityIgnoreMatcher;
 

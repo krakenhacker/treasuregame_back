@@ -1,4 +1,5 @@
-package com.example.treasuregame_back.user;
+package com.example.treasuregame_back.Data;
+import com.example.treasuregame_back.Models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

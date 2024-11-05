@@ -1,12 +1,12 @@
-package com.example.treasuregame_back.GameUsers;
+package com.example.treasuregame_back.Data;
 
-import com.example.treasuregame_back.game.Game;
-import com.example.treasuregame_back.user.User;
+import com.example.treasuregame_back.Models.Game;
+import com.example.treasuregame_back.Models.GameUsers;
+import com.example.treasuregame_back.Models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collection;
 import java.util.List;
 
 @Repository

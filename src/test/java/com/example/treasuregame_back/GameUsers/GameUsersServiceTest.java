@@ -1,9 +1,10 @@
 package com.example.treasuregame_back.GameUsers;
 
-import com.example.treasuregame_back.game.Game;
-import com.example.treasuregame_back.game.GameRepository;
-import com.example.treasuregame_back.game.GameService;
-import com.example.treasuregame_back.user.User;
+import com.example.treasuregame_back.Data.GameUsersRepository;
+import com.example.treasuregame_back.Models.Game;
+import com.example.treasuregame_back.Models.GameUsers;
+import com.example.treasuregame_back.Services.GameUsersService;
+import com.example.treasuregame_back.Models.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

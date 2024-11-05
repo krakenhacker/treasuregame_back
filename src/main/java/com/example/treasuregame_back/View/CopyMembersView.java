@@ -1,24 +1,21 @@
 package com.example.treasuregame_back.View;
 
-import com.example.treasuregame_back.Email.EmailServiceImpl;
-import com.example.treasuregame_back.GameUsers.GameUsers;
-import com.example.treasuregame_back.GameUsers.GameUsersService;
-import com.example.treasuregame_back.game.Game;
-import com.example.treasuregame_back.game.GameService;
-import com.example.treasuregame_back.user.User;
+import com.example.treasuregame_back.Services.EmailServiceImpl;
+import com.example.treasuregame_back.Models.GameUsers;
+import com.example.treasuregame_back.Services.GameUsersService;
+import com.example.treasuregame_back.Models.Game;
+import com.example.treasuregame_back.Services.GameService;
+import com.example.treasuregame_back.Models.User;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
-import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.security.RolesAllowed;
-import java.util.Collection;
 import java.util.List;
 
 @Route("copymembers")

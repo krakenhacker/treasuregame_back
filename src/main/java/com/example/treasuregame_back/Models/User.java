@@ -1,7 +1,6 @@
-package com.example.treasuregame_back.user;
+package com.example.treasuregame_back.Models;
 
-import com.example.treasuregame_back.GameUsers.GameUsers;
-import com.example.treasuregame_back.game.Game;
+import com.example.treasuregame_back.Models.GameUsers;
 
 import javax.persistence.*;
 import java.util.HashSet;

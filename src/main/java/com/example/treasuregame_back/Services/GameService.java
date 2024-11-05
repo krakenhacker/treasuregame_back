@@ -1,16 +1,14 @@
-package com.example.treasuregame_back.game;
+package com.example.treasuregame_back.Services;
 
-import com.example.treasuregame_back.GameUsers.GameUsers;
-import com.example.treasuregame_back.user.User;
-import com.example.treasuregame_back.user.UserRepository;
-import org.jetbrains.annotations.NotNull;
+import com.example.treasuregame_back.Data.GameRepository;
+import com.example.treasuregame_back.Models.GameUsers;
+import com.example.treasuregame_back.Models.Game;
+import com.example.treasuregame_back.Models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.vaadin.crudui.crud.CrudListener;
 
-import java.math.BigDecimal;
 import java.util.Collection;
-import java.util.List;
 import java.util.Random;
 
 @Service

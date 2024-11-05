@@ -1,9 +1,9 @@
 package com.example.treasuregame_back.View;
-import com.example.treasuregame_back.GameUsers.GameUsersService;
-import com.example.treasuregame_back.game.Game;
-import com.example.treasuregame_back.game.GameService;
-import com.example.treasuregame_back.user.User;
-import com.example.treasuregame_back.user.UserService;
+import com.example.treasuregame_back.Services.GameUsersService;
+import com.example.treasuregame_back.Models.Game;
+import com.example.treasuregame_back.Services.GameService;
+import com.example.treasuregame_back.Models.User;
+import com.example.treasuregame_back.Services.UserService;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
