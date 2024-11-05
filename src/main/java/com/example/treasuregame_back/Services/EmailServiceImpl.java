@@ -1,4 +1,4 @@
-package com.example.treasuregame_back.Email;
+package com.example.treasuregame_back.Services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;

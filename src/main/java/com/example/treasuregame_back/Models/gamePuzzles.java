@@ -1,6 +1,6 @@
-package com.example.treasuregame_back.gamePuzzles;
+package com.example.treasuregame_back.Models;
 
-import com.example.treasuregame_back.game.Game;
+import com.example.treasuregame_back.Models.Game;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

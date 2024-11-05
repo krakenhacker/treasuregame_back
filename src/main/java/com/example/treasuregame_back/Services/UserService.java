@@ -1,10 +1,11 @@
-package com.example.treasuregame_back.user;
+package com.example.treasuregame_back.Services;
+import com.example.treasuregame_back.Data.UserRepository;
+import com.example.treasuregame_back.Models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.vaadin.crudui.crud.CrudListener;
 
 import java.util.Collection;
-import java.util.List;
 
 @Service
 public class UserService  implements CrudListener<User> {

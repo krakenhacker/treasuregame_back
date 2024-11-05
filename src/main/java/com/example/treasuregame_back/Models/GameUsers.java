@@ -1,7 +1,4 @@
-package com.example.treasuregame_back.GameUsers;
-
-import com.example.treasuregame_back.game.Game;
-import com.example.treasuregame_back.user.User;
+package com.example.treasuregame_back.Models;
 
 import javax.persistence.*;
 

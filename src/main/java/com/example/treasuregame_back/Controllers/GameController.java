@@ -1,6 +1,8 @@
-package com.example.treasuregame_back.game;
+package com.example.treasuregame_back.Controllers;
 
 
+import com.example.treasuregame_back.Models.Game;
+import com.example.treasuregame_back.Services.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

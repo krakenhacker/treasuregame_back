@@ -1,6 +1,8 @@
-package com.example.treasuregame_back.GameUsers;
-import com.example.treasuregame_back.game.Game;
-import com.example.treasuregame_back.user.User;
+package com.example.treasuregame_back.Services;
+import com.example.treasuregame_back.Data.GameUsersRepository;
+import com.example.treasuregame_back.Models.Game;
+import com.example.treasuregame_back.Models.GameUsers;
+import com.example.treasuregame_back.Models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.vaadin.crudui.crud.CrudListener;

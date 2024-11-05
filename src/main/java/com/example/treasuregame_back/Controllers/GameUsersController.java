@@ -1,6 +1,8 @@
-package com.example.treasuregame_back.GameUsers;
+package com.example.treasuregame_back.Controllers;
 
-import com.example.treasuregame_back.game.Game;
+import com.example.treasuregame_back.Services.GameUsersService;
+import com.example.treasuregame_back.Models.Game;
+import com.example.treasuregame_back.Models.GameUsers;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;

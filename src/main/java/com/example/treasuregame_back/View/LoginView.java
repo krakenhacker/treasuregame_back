@@ -9,6 +9,8 @@ public class LoginView extends Composite<LoginOverlay> {
 
     public LoginView(){
         getContent().setOpened(true);
+        getContent().setTitle("Treasure Game Back Office");
+        getContent().setDescription("Admin Platform Treasure Game");
         getContent().setAction("login");
     }
 }

@@ -1,19 +1,8 @@
-package com.example.treasuregame_back.game;
-
-import com.example.treasuregame_back.GameUsers.GameUsers;
-import com.example.treasuregame_back.user.User;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Length;
+package com.example.treasuregame_back.Models;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
